@@ -31,3 +31,22 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# Go executables and test output
+bootstrap-median
+
+# Temporary Go profiling output
+cpu.pprof
+mem.pprof
+
+# R session files
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
