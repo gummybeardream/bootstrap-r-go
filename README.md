@@ -1,7 +1,5 @@
-# bootstrap-r-go
-Go and R bootstrap sampling comparison
-
 # Bootstrap Performance Comparison: R and Go
+Go and R bootstrap sampling comparison
 
 ## Project Overview
 
