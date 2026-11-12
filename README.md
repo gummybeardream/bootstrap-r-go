@@ -1,5 +1,5 @@
 # Bootstrap Performance Comparison: R and Go
-Go and R bootstrap sampling comparison
+R and Go bootstrap sampling comparison
 
 ## Project Overview
 
@@ -7,11 +7,13 @@ Go and R bootstrap sampling comparison
 
 ## Selected Statistical Method
 
-The selected statistical method is the bootstrap estimation of the median's standard error. The median is the middle value after sorting all observations. Standard error measures how much an estimate would vary across repeated samples. Bootstrap resampling approximates how an estimate can vary across repeated samples. Bootstrap resampling replicates this variation by repeatedly sampling from the observed data with replacement. This method is computationally intensive because it may repeat the calculation thousands of times. 
+The selected statistical method is the bootstrap estimation of the median's standard error. The median is the middle value after sorting all observations. Standard error measures how much an estimate would vary across repeated samples. Bootstrap resampling approximates how an estimate can vary across repeated samples. Bootstrap resampling replicates this variation by repeatedly sampling from the observed data with replacement. This method is computationally intensive because it may repeat the calculation thousands of times.
 
 ## Bootstrap Methodology
 
 ## R Package Research
+
+The `boot` package was chosen because it is an established R package that handles repeated resampling while allowing the user to define the statistic being measured.
 
 `boot`: https://cran.r-project.org/package=boot
 
@@ -25,7 +27,7 @@ The selected statistical method is the bootstrap estimation of the median's stan
 
 ## Data and Experimental Design
 
-R and go will read the same saved observations from the shared dataset, `data/symmetric.csv`
+R and Go will read the same saved observations from the shared dataset, `data/symmetric.csv`
 
 - Distribution: normal and symmetric
 - Observation count: 1,000
@@ -37,6 +39,16 @@ R and go will read the same saved observations from the shared dataset, `data/sy
 
 
 ## R Implementation
+
+The program reads `data/symmetric.csv`. The `value` column contains 1,000 observations. The `boot` package performs 10,000 resamples with replacement while the defined statistic function calculates the median of each resample. Seed 2026 makes the bootstrap reproducible. The standard deviation of the bootstrap medians estimates the median's standard error. 
+
+### R Baseline Results
+
+| Dataset | Observations | Bootstrap Seed | Bootstrap Repetitions | Original Median | Bootstrap Standard Error |
+|---|---:|---:|---:|---:|---:|
+| Symmetric normal | 1,000 | 2026 | 10,000 | -0.002755907 | 0.03938473 |
+
+Using 10,000 bootstrap resamples, the estimated standard error of the sample median was 0.03938473. This represents the approximate variation of the median across repeated samples. Running the program twice with the same seed produced identical results, demonstrating reproducibility.
 
 ## Go Implementation
 

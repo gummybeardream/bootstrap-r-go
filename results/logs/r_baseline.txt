@@ -1,0 +1,5 @@
+Observation count: 1000 
+Bootstrap seed: 2026 
+Bootstrap repetitions: 10000 
+Original median: -0.002755907 
+Bootstrap standard error: 0.03938473 
