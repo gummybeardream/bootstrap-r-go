@@ -23,11 +23,32 @@ The `boot` package was chosen because it is an established R package that handle
 
 ## Go Package Research
 
+| Package | Type | Planned use |
+|---|---|---|
+| `encoding/csv` | Go standard library | Read the shared CSV dataset |
+| `strconv` | Go standard library | Convert CSV text into numerical values |
+| `sort` | Go standard library | Sort values when calculating the median |
+| `math` | Go standard library | Calculate the square root used in standard deviation |
+| `os` | Go standard library | Open the input file |
+| `log` | Go standard library | Record application events and errors |
+| `mt19937` | Third-party | Generate reproducible Mersenne Twister random numbers |
+
+Standard-library packages are included with Go and will be used for the project. `mt19937` is being considered because R uses Mersenne Twister by default to generate random numbers. Using the same random-number algorithm improves comparability, although it does not guarantee identical resamples.
+
+- Go standard library: https://pkg.go.dev/std
+- Mersenne Twister package: https://github.com/seehuhn/mt19937
+
 ## Repository Structure
 
 ## Data and Experimental Design
 
-R and Go will read the same saved observations from the shared dataset, `data/symmetric.csv`
+### Go Environment:
+
+- Go version: 1.27.1
+- Go operating system and architecture: darwin/arm64
+- Go module: `github.com/gummybeardream/bootstrap-r-go`
+
+R and Go will read the same saved observations from the shared dataset, `data/symmetric.csv`.
 
 - Distribution: normal and symmetric
 - Observation count: 1,000
