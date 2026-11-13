@@ -1,0 +1,12 @@
+=== RUN   TestCalculateMedianOddCount
+--- PASS: TestCalculateMedianOddCount (0.00s)
+=== RUN   TestCalculateMedianEvenCount
+--- PASS: TestCalculateMedianEvenCount (0.00s)
+=== RUN   TestCalculateMedianSingleValue
+--- PASS: TestCalculateMedianSingleValue (0.00s)
+=== RUN   TestCalculateMedianEmptyInput
+--- PASS: TestCalculateMedianEmptyInput (0.00s)
+=== RUN   TestCalculateMedianPreservesInput
+--- PASS: TestCalculateMedianPreservesInput (0.00s)
+PASS
+ok  	github.com/gummybeardream/bootstrap-r-go/go	(cached)
