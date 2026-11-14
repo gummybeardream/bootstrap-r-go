@@ -40,6 +40,15 @@ Standard-library packages are included with Go and will be used for the project.
 
 ## Repository Structure
 
+- `data/symmetric.csv`: Shared input dataset used by R and Go.
+- `r/generate_data.R`: Generates the symmetric dataset.
+- `r/bootstrap_median.R`: Runs the R bootstrap baseline.
+- `go/data.go`: Reads and validates the shared CSV data.
+- `go/data_test.go`: Tests valid and invalid CSV inputs.
+- `go/median.go`: Calculates the median without changing the input.
+- `go/median_test.go`: Tests the median calculation.
+- `results/logs/`: Contains saved program and test output.
+
 ## Data and Experimental Design
 
 ### Go Environment:
@@ -73,7 +82,17 @@ Using 10,000 bootstrap resamples, the estimated standard error of the sample med
 
 ## Go Implementation
 
+The Go implementation currently contains separate functions for reading the shared CSV dataset and calculating the median. The CSV reader locates the `value` column, converts its contents to `float64`, and returns descriptive errors for missing or invalid data. The median function sorts a copy of the input so that the original observations are not rearranged.
+
 ## Testing
+
+| Component | Test coverage | Tests | Result |
+|---|---|---:|---|
+| Median calculation | Odd count, even count, single value, empty input, input preservation | 5 | Passed |
+| CSV reader | Valid input, reordered columns, missing column, invalid number, empty value, header only, missing file, empty file | 8 | Passed |
+| Total | Initial Go unit-test suite | 13 | Passed |
+
+Tests were run with `go test -count=1 -v ./go`. The `-count=1` option disabled Go's test cache so that the saved output represented a fresh test execution.
 
 ## Benchmarking
 
