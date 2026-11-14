@@ -1,0 +1,28 @@
+=== RUN   TestReadValuesCSVValidFile
+--- PASS: TestReadValuesCSVValidFile (0.00s)
+=== RUN   TestReadValuesCSVValueColumnNotFirst
+--- PASS: TestReadValuesCSVValueColumnNotFirst (0.00s)
+=== RUN   TestReadValuesCSVMissingValueColumn
+--- PASS: TestReadValuesCSVMissingValueColumn (0.00s)
+=== RUN   TestReadValuesCSVInvalidNumber
+--- PASS: TestReadValuesCSVInvalidNumber (0.00s)
+=== RUN   TestReadValuesCSVEmptyValue
+--- PASS: TestReadValuesCSVEmptyValue (0.00s)
+=== RUN   TestReadValuesCSVHeaderOnly
+--- PASS: TestReadValuesCSVHeaderOnly (0.00s)
+=== RUN   TestReadValuesCSVMissingFile
+--- PASS: TestReadValuesCSVMissingFile (0.00s)
+=== RUN   TestReadValuesCSVEmptyFile
+--- PASS: TestReadValuesCSVEmptyFile (0.00s)
+=== RUN   TestCalculateMedianOddCount
+--- PASS: TestCalculateMedianOddCount (0.00s)
+=== RUN   TestCalculateMedianEvenCount
+--- PASS: TestCalculateMedianEvenCount (0.00s)
+=== RUN   TestCalculateMedianSingleValue
+--- PASS: TestCalculateMedianSingleValue (0.00s)
+=== RUN   TestCalculateMedianEmptyInput
+--- PASS: TestCalculateMedianEmptyInput (0.00s)
+=== RUN   TestCalculateMedianPreservesInput
+--- PASS: TestCalculateMedianPreservesInput (0.00s)
+PASS
+ok  	github.com/gummybeardream/bootstrap-r-go/go	0.247s
