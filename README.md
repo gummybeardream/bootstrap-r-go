@@ -51,6 +51,9 @@ Standard-library packages are included with Go and will be used for the project.
 - `go/bootstrap_test.go`: Tests bootstrap sample size, values, validation, and reproducibility.
 - `go/statistics.go`: Calculates sample standard deviation.
 - `go/statistics_test.go`: Tests known results and invalid input.
+- `go/main.go`: Runs the complete sequential Go bootstrap application.
+- `go/statistics.go`: Calculates sample standard deviation.
+- `go/statistics_test.go`: Tests the standard-deviation calculation.
 - `results/logs/`: Contains saved program and test output.
 
 ## Data and Experimental Design
@@ -85,11 +88,7 @@ Using 10,000 bootstrap resamples, the estimated standard error of the sample med
 
 ## Go Implementation
 
-The Go implementation currently contains separate functions for reading the shared CSV dataset and calculating the median. The CSV reader locates the `value` column, converts its contents to `float64`, and returns descriptive errors for missing or invalid data. The median function sorts a copy of the input so that the original observations are not rearranged.
-
-The bootstrap sampler creates a new sample with the same size as the original dataset. Each observation is selected independently from the source data, allowing the same observation to appear multiple times. The sampler accepts a seeded random-number generator so reproducibility can be tested independently of the sampling logic.
-
-The sequential bootstrap function repeatedly creates bootstrap samples, calculates each sample's median, and stores the resulting medians. It estimates the median's standard error by calculating the sample standard deviation of those bootstrap medians.
+The sequential Go application uses the shared dataset, seed 2026, and 10,000 bootstrap repetitions. It creates each bootstrap sample with replacement, calculates its median, and estimates the median's standard error using the sample standard deviation of the 10,000 bootstrap medians. Two executions using the same seed produced identical results.
 
 ### Go Median Baseline
 
@@ -117,6 +116,21 @@ Tests were run with `go test -count=1 -v ./go`. The `-count=1` option disabled G
 ## Profiling and Logging
 
 ## Results
+
+### Sequential Go Bootstrap Results
+
+| Dataset | Observations | Repetitions | Original Median | Bootstrap Standard Error |
+|---|---:|---:|---:|---:|
+| Symmetric normal | 1,000 | 10,000 | -0.002755907 | 0.038877677 |
+
+### Initial R and Go Comparison
+
+| Measurement | R | Sequential Go | Absolute Difference | Relative Difference |
+|---|---:|---:|---:|---:|
+| Original median | -0.002755907 | -0.002755907 | 0 | 0% |
+| Bootstrap standard error | 0.039384730 | 0.038877677 | 0.000507053 | 1.29% |
+
+The original medians match exactly because both programs use the same saved observations and median definition. The bootstrap standard errors differ by approximately 1.29%. This difference is expected because the R and Go random-number generators do not produce identical resampling sequences.
 
 ## Cloud Cost Analysis
 
