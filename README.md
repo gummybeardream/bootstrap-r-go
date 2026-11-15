@@ -33,7 +33,7 @@ The `boot` package was chosen because it is an established R package that handle
 | `log` | Go standard library | Record application events and errors |
 | `mt19937` | Third-party | Generate reproducible Mersenne Twister random numbers |
 
-Standard-library packages are included with Go and will be used for the project. `mt19937` is being considered because R uses Mersenne Twister by default to generate random numbers. Using the same random-number algorithm improves comparability, although it does not guarantee identical resamples.
+Standard-library packages are included with Go and will be used for the project. The `mt19937` package was selected because R uses a Mersenne Twister generator by default. The Go package implements the 64-bit Mersenne Twister and provides reproducible random-number generation. Using generators from the same algorithm family improves the experimental comparison, but R and Go are not expected to produce identical resamples from the same seed.
 
 - Go standard library: https://pkg.go.dev/std
 - Mersenne Twister package: https://github.com/seehuhn/mt19937
@@ -47,11 +47,13 @@ Standard-library packages are included with Go and will be used for the project.
 - `go/data_test.go`: Tests valid and invalid CSV inputs.
 - `go/median.go`: Calculates the median without changing the input.
 - `go/median_test.go`: Tests the median calculation.
+- `go/bootstrap.go`: Creates one bootstrap sample with replacement.
+- `go/bootstrap_test.go`: Tests bootstrap sample size, values, validation, and reproducibility.
 - `results/logs/`: Contains saved program and test output.
 
 ## Data and Experimental Design
 
-### Go Environment:
+### Go Environment
 
 - Go version: 1.27.1
 - Go operating system and architecture: darwin/arm64
@@ -62,14 +64,14 @@ R and Go will read the same saved observations from the shared dataset, `data/sy
 - Distribution: normal and symmetric
 - Observation count: 1,000
 - Data-generation seed: 2025
-- Shared file: data/symmetric.csv
+- Shared file: `data/symmetric.csv`
 - Planned bootstrap repetitions: 10,000
 - R version: 4.3.2
-- `boot` package version 1.3.28.1
+- `boot` package version: 1.3.28.1
 
 ## R Implementation
 
-The program reads `data/symmetric.csv`. The `value` column contains 1,000 observations. The `boot` package performs 10,000 resamples with replacement while the defined statistic function calculates the median of each resample. Seed 2026 makes the bootstrap reproducible. The standard deviation of the bootstrap medians estimates the median's standard error. 
+The program reads `data/symmetric.csv`. The `value` column contains 1,000 observations. The `boot` package performs 10,000 resamples with replacement while the defined statistic function calculates the median of each resample. Seed 2026 makes the bootstrap reproducible. The standard deviation of the bootstrap medians estimates the median's standard error.
 
 ### R Baseline Results
 
@@ -82,6 +84,8 @@ Using 10,000 bootstrap resamples, the estimated standard error of the sample med
 ## Go Implementation
 
 The Go implementation currently contains separate functions for reading the shared CSV dataset and calculating the median. The CSV reader locates the `value` column, converts its contents to `float64`, and returns descriptive errors for missing or invalid data. The median function sorts a copy of the input so that the original observations are not rearranged.
+
+The bootstrap sampler creates a new sample with the same size as the original dataset. Each observation is selected independently from the source data, allowing the same observation to appear multiple times. The sampler accepts a seeded random-number generator so reproducibility can be tested independently of the sampling logic.
 
 ### Go Median Baseline
 
@@ -97,7 +101,8 @@ The initial Go application successfully read the shared CSV dataset and produced
 |---|---|---:|---|
 | Median calculation | Odd count, even count, single value, empty input, input preservation | 5 | Passed |
 | CSV reader | Valid input, reordered columns, missing column, invalid number, empty value, header only, missing file, empty file | 8 | Passed |
-| Total | Initial Go unit-test suite | 13 | Passed |
+| Bootstrap sampling | Sample size, source values, empty input, nil generator, reproducibility | 5 | Passed |
+| Total | Current Go unit-test suite | 18 | Passed |
 
 Tests were run with `go test -count=1 -v ./go`. The `-count=1` option disabled Go's test cache so that the saved output represented a fresh test execution.
 
