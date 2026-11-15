@@ -101,3 +101,88 @@ func TestBootstrapSampleReproducible(t *testing.T) {
 		)
 	}
 }
+
+func TestBootstrapMedianStandardErrorConstantData(t *testing.T) {
+	values := []float64{5, 5, 5, 5}
+	rng := newTestRNG(2026)
+
+	standardError, err := bootstrapMedianStandardError(values, 100, rng)
+	if err != nil {
+		t.Fatalf(
+			"bootstrapMedianStandardError returned an unexpected error: %v",
+			err,
+		)
+	}
+
+	if standardError != 0 {
+		t.Errorf(
+			"bootstrapMedianStandardError() = %v; expected 0",
+			standardError,
+		)
+	}
+}
+
+func TestBootstrapMedianStandardErrorInvalidRepetitions(t *testing.T) {
+	values := []float64{1, 2, 3}
+	rng := newTestRNG(2026)
+
+	_, err := bootstrapMedianStandardError(values, 1, rng)
+	if err == nil {
+		t.Fatal(
+			"bootstrapMedianStandardError expected an error for fewer than two repetitions",
+		)
+	}
+}
+
+func TestBootstrapMedianStandardErrorEmptyInput(t *testing.T) {
+	rng := newTestRNG(2026)
+
+	_, err := bootstrapMedianStandardError([]float64{}, 100, rng)
+	if err == nil {
+		t.Fatal(
+			"bootstrapMedianStandardError expected an error for empty input",
+		)
+	}
+}
+
+func TestBootstrapMedianStandardErrorNilGenerator(t *testing.T) {
+	values := []float64{1, 2, 3}
+
+	_, err := bootstrapMedianStandardError(values, 100, nil)
+	if err == nil {
+		t.Fatal(
+			"bootstrapMedianStandardError expected an error for a nil generator",
+		)
+	}
+}
+
+func TestBootstrapMedianStandardErrorReproducible(t *testing.T) {
+	values := []float64{1, 2, 3, 4, 5}
+
+	firstRNG := newTestRNG(2026)
+	secondRNG := newTestRNG(2026)
+
+	firstResult, err := bootstrapMedianStandardError(values, 100, firstRNG)
+	if err != nil {
+		t.Fatalf(
+			"first bootstrapMedianStandardError call returned an unexpected error: %v",
+			err,
+		)
+	}
+
+	secondResult, err := bootstrapMedianStandardError(values, 100, secondRNG)
+	if err != nil {
+		t.Fatalf(
+			"second bootstrapMedianStandardError call returned an unexpected error: %v",
+			err,
+		)
+	}
+
+	if firstResult != secondResult {
+		t.Errorf(
+			"bootstrap standard errors differ: first %v; second %v",
+			firstResult,
+			secondResult,
+		)
+	}
+}

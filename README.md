@@ -49,6 +49,8 @@ Standard-library packages are included with Go and will be used for the project.
 - `go/median_test.go`: Tests the median calculation.
 - `go/bootstrap.go`: Creates one bootstrap sample with replacement.
 - `go/bootstrap_test.go`: Tests bootstrap sample size, values, validation, and reproducibility.
+- `go/statistics.go`: Calculates sample standard deviation.
+- `go/statistics_test.go`: Tests known results and invalid input.
 - `results/logs/`: Contains saved program and test output.
 
 ## Data and Experimental Design
@@ -87,6 +89,8 @@ The Go implementation currently contains separate functions for reading the shar
 
 The bootstrap sampler creates a new sample with the same size as the original dataset. Each observation is selected independently from the source data, allowing the same observation to appear multiple times. The sampler accepts a seeded random-number generator so reproducibility can be tested independently of the sampling logic.
 
+The sequential bootstrap function repeatedly creates bootstrap samples, calculates each sample's median, and stores the resulting medians. It estimates the median's standard error by calculating the sample standard deviation of those bootstrap medians.
+
 ### Go Median Baseline
 
 | Dataset | Observations | R Median | Go Median | Match |
@@ -102,7 +106,9 @@ The initial Go application successfully read the shared CSV dataset and produced
 | Median calculation | Odd count, even count, single value, empty input, input preservation | 5 | Passed |
 | CSV reader | Valid input, reordered columns, missing column, invalid number, empty value, header only, missing file, empty file | 8 | Passed |
 | Bootstrap sampling | Sample size, source values, empty input, nil generator, reproducibility | 5 | Passed |
-| Total | Current Go unit-test suite | 18 | Passed |
+| Sample standard deviation | Known result and insufficient input | 2 | Passed |
+| Sequential bootstrap | Constant data, invalid repetitions, empty input, nil generator, reproducibility | 5 | Passed |
+| Total | Current Go unit-test suite | 25 | Passed |
 
 Tests were run with `go test -count=1 -v ./go`. The `-count=1` option disabled Go's test cache so that the saved output represented a fresh test execution.
 
