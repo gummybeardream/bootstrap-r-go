@@ -1,0 +1,21 @@
+goos: darwin
+goarch: arm64
+pkg: github.com/gummybeardream/bootstrap-r-go/go
+cpu: Apple M1
+BenchmarkReadValuesCSV-8                  	    9234	    121294 ns/op	  110248 B/op	    2023 allocs/op
+BenchmarkReadValuesCSV-8                  	    9229	    131937 ns/op	  110248 B/op	    2023 allocs/op
+BenchmarkReadValuesCSV-8                  	    9649	    129418 ns/op	  110248 B/op	    2023 allocs/op
+BenchmarkReadValuesCSV-8                  	    9019	    123633 ns/op	  110248 B/op	    2023 allocs/op
+BenchmarkReadValuesCSV-8                  	    9094	    124274 ns/op	  110248 B/op	    2023 allocs/op
+BenchmarkCalculateMedian-8                	   90447	     13294 ns/op	    8192 B/op	       1 allocs/op
+BenchmarkCalculateMedian-8                	   93646	     13408 ns/op	    8192 B/op	       1 allocs/op
+BenchmarkCalculateMedian-8                	   92866	     13475 ns/op	    8192 B/op	       1 allocs/op
+BenchmarkCalculateMedian-8                	   93043	     13223 ns/op	    8192 B/op	       1 allocs/op
+BenchmarkCalculateMedian-8                	   91419	     13322 ns/op	    8192 B/op	       1 allocs/op
+BenchmarkBootstrapMedianStandardError-8   	       3	 496715764 ns/op	163925088 B/op	   20007 allocs/op
+BenchmarkBootstrapMedianStandardError-8   	       2	 502953604 ns/op	163925032 B/op	   20006 allocs/op
+BenchmarkBootstrapMedianStandardError-8   	       2	 506995250 ns/op	163925200 B/op	   20008 allocs/op
+BenchmarkBootstrapMedianStandardError-8   	       2	 536481396 ns/op	163925088 B/op	   20007 allocs/op
+BenchmarkBootstrapMedianStandardError-8   	       2	 510622812 ns/op	163924920 B/op	   20005 allocs/op
+PASS
+ok  	github.com/gummybeardream/bootstrap-r-go/go	23.513s

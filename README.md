@@ -114,6 +114,25 @@ Tests were run with `go test -count=1 -v ./go`. The `-count=1` option disabled G
 
 ## Benchmarking
 
+### Initial Go Microbenchmarks
+
+The Go benchmarks were run five times on an Apple M1 using Go 1.27.1 on `darwin/arm64`. Unit tests were skipped during measurement, and `-benchmem` reported allocation statistics.
+
+| Component | Average Time per Operation | Bytes per Operation | Allocations per Operation |
+|---|---:|---:|---:|
+| CSV reading | 0.126 ms | 110,248 | 2,023 |
+| Median calculation | 0.013 ms | 8,192 | 1 |
+| Sequential bootstrap, 10,000 repetitions | 510.754 ms | 163,925,066 | 20,007 |
+
+The sequential bootstrap was the most expensive component. It allocated approximately 164 MB across about 20,007 allocations per operation. These values represent total allocation activity, not peak process memory.
+
+Run benchmarks with this command:
+
+```bash
+go test -run '^$' -bench . -benchmem -count 5 ./go
+```
+
+
 ## Profiling and Logging
 
 The Go application uses the standard-library `log` package to record major execution events. It logs application startup, the input file, the number of observations loaded, the bootstrap seed and repetition count, successful completion of the calculation, and application completion. Fatal input or calculation errors are also reported through the logger.
