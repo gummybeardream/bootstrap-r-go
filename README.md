@@ -55,6 +55,7 @@ Standard-library packages are included with Go and will be used for the project.
 - `go/statistics.go`: Calculates sample standard deviation.
 - `go/statistics_test.go`: Tests the standard-deviation calculation.
 - `results/logs/`: Contains saved program and test output.
+- `results/logs/go_application.log`: Example Go application log and statistical output.
 
 ## Data and Experimental Design
 
@@ -114,6 +115,16 @@ Tests were run with `go test -count=1 -v ./go`. The `-count=1` option disabled G
 ## Benchmarking
 
 ## Profiling and Logging
+
+The Go application uses the standard-library `log` package to record major execution events. It logs application startup, the input file, the number of observations loaded, the bootstrap seed and repetition count, successful completion of the calculation, and application completion. Fatal input or calculation errors are also reported through the logger.
+
+Individual bootstrap repetitions are not logged because 10,000 log messages would produce excessive output and distort performance measurements.
+
+Logs are written to standard error, while statistical results are written to standard output. Both streams were captured in `results/logs/go_application.log` using:
+
+```text
+go run ./go 2>&1 | tee results/logs/go_application.log
+```
 
 ## Results
 

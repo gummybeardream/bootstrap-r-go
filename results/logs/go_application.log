@@ -1,0 +1,12 @@
+bootstrap-r-go: 2026/11/15 00:13:30 application started
+bootstrap-r-go: 2026/11/15 00:13:30 reading input file data/symmetric.csv
+bootstrap-r-go: 2026/11/15 00:13:30 loaded 1000 observations
+bootstrap-r-go: 2026/11/15 00:13:30 running 10000 bootstrap repetitions with seed 2026
+bootstrap-r-go: 2026/11/15 00:13:30 bootstrap calculation completed
+Input file: data/symmetric.csv
+Observation count: 1000
+Bootstrap seed: 2026
+Bootstrap repetitions: 10000
+Original median: -0.002755907
+Bootstrap standard error: 0.038877677
+bootstrap-r-go: 2026/11/15 00:13:30 application completed
