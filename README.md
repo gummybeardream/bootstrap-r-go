@@ -67,7 +67,6 @@ R and Go will read the same saved observations from the shared dataset, `data/sy
 - R version: 4.3.2
 - `boot` package version 1.3.28.1
 
-
 ## R Implementation
 
 The program reads `data/symmetric.csv`. The `value` column contains 1,000 observations. The `boot` package performs 10,000 resamples with replacement while the defined statistic function calculates the median of each resample. Seed 2026 makes the bootstrap reproducible. The standard deviation of the bootstrap medians estimates the median's standard error. 
@@ -83,6 +82,14 @@ Using 10,000 bootstrap resamples, the estimated standard error of the sample med
 ## Go Implementation
 
 The Go implementation currently contains separate functions for reading the shared CSV dataset and calculating the median. The CSV reader locates the `value` column, converts its contents to `float64`, and returns descriptive errors for missing or invalid data. The median function sorts a copy of the input so that the original observations are not rearranged.
+
+### Go Median Baseline
+
+| Dataset | Observations | R Median | Go Median | Match |
+|---|---:|---:|---:|---|
+| Symmetric normal | 1,000 | -0.002755907 | -0.002755907 | Yes |
+
+The initial Go application successfully read the shared CSV dataset and produced the same original median as R. This confirms that both implementations use the same observations and median definition.
 
 ## Testing
 
