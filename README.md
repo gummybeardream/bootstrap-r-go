@@ -144,6 +144,11 @@ Logs are written to standard error, while statistical results are written to sta
 ```text
 go run ./go 2>&1 | tee results/logs/go_application.log
 ```
+### Baseline Go Profiles
+
+CPU profiling showed that median sorting was the primary application-level CPU cost. The `calculateMedian` and sorting calls accounted for approximately 45.45% of cumulative CPU samples. Random-number index generation accounted for a much smaller share.
+
+The allocation-space memory profile showed that `calculateMedian` allocated 79.62 MB and `bootstrapSample` allocated 77.60 MB. Together, these functions accounted for approximately 97.99% of allocated memory. The program created one slice for each bootstrap sample and a second copy when calculating each median.
 
 ## Results
 

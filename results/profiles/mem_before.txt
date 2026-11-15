@@ -1,0 +1,26 @@
+File: go.test
+Type: alloc_space
+Time: 2026-11-15 00:21:30 CST
+Showing nodes accounting for 159.88MB, 99.65% of 160.45MB total
+Dropped 13 nodes (cum <= 0.80MB)
+      flat  flat%   sum%        cum   cum%
+   79.62MB 49.62% 49.62%    79.62MB 49.62%  github.com/gummybeardream/bootstrap-r-go/go.calculateMedian
+   77.60MB 48.37% 97.99%    77.60MB 48.37%  github.com/gummybeardream/bootstrap-r-go/go.bootstrapSample
+    1.50MB  0.94% 98.92%     1.50MB  0.94%  runtime.mallocgc
+    1.16MB  0.72% 99.65%     1.16MB  0.72%  runtime/pprof.StartCPUProfile
+         0     0% 99.65%   157.22MB 97.99%  github.com/gummybeardream/bootstrap-r-go/go.BenchmarkBootstrapMedianStandardError
+         0     0% 99.65%   157.22MB 97.99%  github.com/gummybeardream/bootstrap-r-go/go.bootstrapMedianStandardError
+         0     0% 99.65%     1.16MB  0.72%  main.main
+         0     0% 99.65%        1MB  0.62%  runtime.allocm
+         0     0% 99.65%     1.16MB  0.72%  runtime.main
+         0     0% 99.65%        1MB  0.62%  runtime.newm
+         0     0% 99.65%     1.50MB  0.94%  runtime.newobject
+         0     0% 99.65%        1MB  0.62%  runtime.resetspinning
+         0     0% 99.65%        1MB  0.62%  runtime.schedule
+         0     0% 99.65%        1MB  0.62%  runtime.startm
+         0     0% 99.65%        1MB  0.62%  runtime.wakep
+         0     0% 99.65%   157.22MB 97.99%  testing.(*B).run1.func1
+         0     0% 99.65%   157.22MB 97.99%  testing.(*B).runN
+         0     0% 99.65%     1.16MB  0.72%  testing.(*M).Run
+         0     0% 99.65%     1.16MB  0.72%  testing.(*M).before
+         0     0% 99.65%     1.16MB  0.72%  testing/internal/testdeps.TestDeps.StartCPUProfile

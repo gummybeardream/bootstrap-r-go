@@ -1,0 +1,53 @@
+File: go.test
+Type: cpu
+Time: 2026-11-15 00:21:29 CST
+Duration: 706.73ms, Total samples = 440ms (62.26%)
+Showing nodes accounting for 440ms, 100% of 440ms total
+      flat  flat%   sum%        cum   cum%
+     170ms 38.64% 38.64%      170ms 38.64%  runtime.kevent
+     120ms 27.27% 65.91%      120ms 27.27%  slices.partitionOrdered[go.shape.float64]
+      50ms 11.36% 77.27%       50ms 11.36%  slices.insertionSortOrdered[go.shape.float64]
+      20ms  4.55% 81.82%       20ms  4.55%  github.com/seehuhn/mt19937.(*MT19937).Int63
+      20ms  4.55% 86.36%       20ms  4.55%  slices.order2Ordered[go.shape.float64] (inline)
+      10ms  2.27% 88.64%       30ms  6.82%  math/rand.(*Rand).Intn
+      10ms  2.27% 90.91%       10ms  2.27%  runtime.checkTimersNoP
+      10ms  2.27% 93.18%       10ms  2.27%  runtime.madvise
+      10ms  2.27% 95.45%       10ms  2.27%  runtime.pthread_cond_wait
+      10ms  2.27% 97.73%       10ms  2.27%  runtime.usleep
+      10ms  2.27%   100%      200ms 45.45%  slices.pdqsortOrdered[go.shape.float64]
+         0     0%   100%      230ms 52.27%  github.com/gummybeardream/bootstrap-r-go/go.BenchmarkBootstrapMedianStandardError
+         0     0%   100%      230ms 52.27%  github.com/gummybeardream/bootstrap-r-go/go.bootstrapMedianStandardError
+         0     0%   100%       30ms  6.82%  github.com/gummybeardream/bootstrap-r-go/go.bootstrapSample
+         0     0%   100%      200ms 45.45%  github.com/gummybeardream/bootstrap-r-go/go.calculateMedian
+         0     0%   100%       20ms  4.55%  math/rand.(*Rand).Int31 (inline)
+         0     0%   100%       20ms  4.55%  math/rand.(*Rand).Int31n
+         0     0%   100%       20ms  4.55%  math/rand.(*Rand).Int63 (inline)
+         0     0%   100%       10ms  2.27%  runtime.(*mheap).alloc.func1
+         0     0%   100%       10ms  2.27%  runtime.(*mheap).allocSpan
+         0     0%   100%       30ms  6.82%  runtime.findRunnable
+         0     0%   100%      160ms 36.36%  runtime.gcStart.func4
+         0     0%   100%       10ms  2.27%  runtime.mPark (inline)
+         0     0%   100%       20ms  4.55%  runtime.mcall
+         0     0%   100%       10ms  2.27%  runtime.morestack
+         0     0%   100%      170ms 38.64%  runtime.netpoll
+         0     0%   100%       10ms  2.27%  runtime.newstack
+         0     0%   100%       10ms  2.27%  runtime.notesleep
+         0     0%   100%       20ms  4.55%  runtime.park_m
+         0     0%   100%       10ms  2.27%  runtime.preemptPark
+         0     0%   100%       10ms  2.27%  runtime.runqgrab
+         0     0%   100%       10ms  2.27%  runtime.runqsteal
+         0     0%   100%       30ms  6.82%  runtime.schedule
+         0     0%   100%       10ms  2.27%  runtime.semasleep
+         0     0%   100%       10ms  2.27%  runtime.startTheWorld.func1
+         0     0%   100%      170ms 38.64%  runtime.startTheWorldWithSema
+         0     0%   100%       10ms  2.27%  runtime.stealWork
+         0     0%   100%       10ms  2.27%  runtime.stopm
+         0     0%   100%       10ms  2.27%  runtime.sysUsed (inline)
+         0     0%   100%       10ms  2.27%  runtime.sysUsedOS (inline)
+         0     0%   100%      180ms 40.91%  runtime.systemstack
+         0     0%   100%      200ms 45.45%  slices.Sort[go.shape.[]float64,go.shape.float64] (inline)
+         0     0%   100%       20ms  4.55%  slices.choosePivotOrdered[go.shape.float64]
+         0     0%   100%       20ms  4.55%  slices.medianOrdered[go.shape.float64]
+         0     0%   100%      200ms 45.45%  sort.Float64s
+         0     0%   100%      230ms 52.27%  testing.(*B).run1.func1
+         0     0%   100%      230ms 52.27%  testing.(*B).runN
