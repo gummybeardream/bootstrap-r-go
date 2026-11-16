@@ -54,7 +54,7 @@ func bootstrapMedianStandardError(
 			)
 		}
 
-		median, err := calculateMedian(sample)
+		median, err := calculateMedianInPlace(sample)
 		if err != nil {
 			return 0, fmt.Errorf(
 				"calculate median for bootstrap repetition %d: %w",

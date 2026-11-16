@@ -150,6 +150,20 @@ CPU profiling showed that median sorting was the primary application-level CPU c
 
 The allocation-space memory profile showed that `calculateMedian` allocated 79.62 MB and `bootstrapSample` allocated 77.60 MB. Together, these functions accounted for approximately 97.99% of allocated memory. The program created one slice for each bootstrap sample and a second copy when calculating each median.
 
+### First Go Optimization
+
+The baseline memory profile showed that each bootstrap repetition allocated one slice in `bootstrapSample` and a second slice when `calculateMedian` copied the sample before sorting it.
+
+The optimized implementation introduced `calculateMedianInPlace`. The original `calculateMedian` function continues to copy its input, preserving its general-purpose behavior. The sequential bootstrap uses the in-place function because each bootstrap sample is newly created and is not needed after its median is calculated.
+
+| Measurement | Before Optimization | After Optimization | Reduction |
+|---|---:|---:|---:|
+| Average runtime | 510.754 ms | 496.756 ms | 2.74% |
+| Bytes allocated per operation | 163,925,066 | 82,004,763 | 49.97% |
+| Allocations per operation | 20,007 | 10,004 | 50.00% |
+
+The optimization removed approximately half of the allocation activity while preserving all statistical results. Runtime improved by approximately 2.74%, showing that sorting remained the main CPU cost even after the extra slice copy was removed.
+
 ## Results
 
 ### Sequential Go Bootstrap Results

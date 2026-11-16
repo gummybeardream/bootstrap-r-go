@@ -69,3 +69,33 @@ func TestCalculateMedianPreservesInput(t *testing.T) {
 		t.Errorf("calculateMedian modified the input: got %v; expected %v", values, original)
 	}
 }
+
+func TestCalculateMedianInPlace(t *testing.T) {
+	values := []float64{9, 1, 5}
+	expectedMedian := 5.0
+	expectedOrder := []float64{1, 5, 9}
+
+	actualMedian, err := calculateMedianInPlace(values)
+	if err != nil {
+		t.Fatalf(
+			"calculateMedianInPlace returned an unexpected error: %v",
+			err,
+		)
+	}
+
+	if actualMedian != expectedMedian {
+		t.Errorf(
+			"calculateMedianInPlace() = %v; expected %v",
+			actualMedian,
+			expectedMedian,
+		)
+	}
+
+	if !slices.Equal(values, expectedOrder) {
+		t.Errorf(
+			"calculateMedianInPlace order = %v; expected %v",
+			values,
+			expectedOrder,
+		)
+	}
+}
