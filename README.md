@@ -319,6 +319,10 @@ I used OpenAI Codex as a programming tutor and review assistant during this proj
 
 I reviewed, entered, tested, and revised the project code and documentation. AI-generated suggestions were validated with Go formatting, unit tests, vetting, benchmarks, and manual application runs.
 
+## Licensing
+
+The original code in this repository is licensed under the MIT License. This project uses Jochen Voss's [`mt19937`](https://github.com/seehuhn/mt19937) Go package, version 1.0.0, which is licensed under the GNU General Public License version 3 or later (GPL-3.0-or-later). Third-party dependencies remain subject to their respective licenses.
+
 ## References
 
 - Gelman, A., & Vehtari, A. (2021). *What are the most important statistical ideas of the past 50 years?* https://arxiv.org/abs/2012.00174
