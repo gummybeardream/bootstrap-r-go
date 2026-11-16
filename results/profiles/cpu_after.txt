@@ -1,0 +1,69 @@
+File: go.test
+Type: cpu
+Time: 2026-11-15 18:51:21 CST
+Duration: 605.95ms, Total samples = 400ms (66.01%)
+Showing nodes accounting for 400ms, 100% of 400ms total
+      flat  flat%   sum%        cum   cum%
+     240ms 60.00% 60.00%      250ms 62.50%  slices.partitionOrdered[go.shape.float64]
+      30ms  7.50% 67.50%       30ms  7.50%  runtime.madvise
+      20ms  5.00% 72.50%       20ms  5.00%  runtime.kevent
+      20ms  5.00% 77.50%      290ms 72.50%  slices.pdqsortOrdered[go.shape.float64]
+      10ms  2.50% 80.00%       10ms  2.50%  cmp.Less[go.shape.float64] (inline)
+      10ms  2.50% 82.50%       10ms  2.50%  math/rand.(*Rand).Int31n
+      10ms  2.50% 85.00%       10ms  2.50%  runtime.(*mspan).init
+      10ms  2.50% 87.50%       10ms  2.50%  runtime.(*unwinder).resolveInternal
+      10ms  2.50% 90.00%       10ms  2.50%  runtime.memclrNoHeapPointers
+      10ms  2.50% 92.50%       10ms  2.50%  runtime.pthread_cond_signal
+      10ms  2.50% 95.00%       10ms  2.50%  runtime.pthread_cond_wait
+      10ms  2.50% 97.50%       10ms  2.50%  slices.insertionSortOrdered[go.shape.float64]
+      10ms  2.50%   100%       10ms  2.50%  slices.medianOrdered[go.shape.float64]
+         0     0%   100%      330ms 82.50%  github.com/gummybeardream/bootstrap-r-go/go.BenchmarkBootstrapMedianStandardError
+         0     0%   100%      330ms 82.50%  github.com/gummybeardream/bootstrap-r-go/go.bootstrapMedianStandardError
+         0     0%   100%       40ms 10.00%  github.com/gummybeardream/bootstrap-r-go/go.bootstrapSample
+         0     0%   100%      290ms 72.50%  github.com/gummybeardream/bootstrap-r-go/go.calculateMedianInPlace
+         0     0%   100%       10ms  2.50%  math/rand.(*Rand).Intn
+         0     0%   100%       10ms  2.50%  runtime.(*gcControllerState).enlistWorker
+         0     0%   100%       10ms  2.50%  runtime.(*mcache).nextFree
+         0     0%   100%       10ms  2.50%  runtime.(*mcache).refill
+         0     0%   100%       10ms  2.50%  runtime.(*mcentral).cacheSpan
+         0     0%   100%       10ms  2.50%  runtime.(*mcentral).grow
+         0     0%   100%       10ms  2.50%  runtime.(*mheap).alloc
+         0     0%   100%       40ms 10.00%  runtime.(*mheap).alloc.func1
+         0     0%   100%       40ms 10.00%  runtime.(*mheap).allocSpan
+         0     0%   100%       10ms  2.50%  runtime.(*mheap).initSpan
+         0     0%   100%       10ms  2.50%  runtime.(*unwinder).next
+         0     0%   100%       10ms  2.50%  runtime.callers
+         0     0%   100%       10ms  2.50%  runtime.callers.func1
+         0     0%   100%       10ms  2.50%  runtime.findRunnable
+         0     0%   100%       10ms  2.50%  runtime.gcBgMarkWorker.func2
+         0     0%   100%       10ms  2.50%  runtime.gcDrain
+         0     0%   100%       10ms  2.50%  runtime.gcDrainMarkWorkerDedicated (inline)
+         0     0%   100%       20ms  5.00%  runtime.gcStart.func4
+         0     0%   100%       10ms  2.50%  runtime.mPark (inline)
+         0     0%   100%       10ms  2.50%  runtime.mProf_Malloc
+         0     0%   100%       30ms  7.50%  runtime.makeslice
+         0     0%   100%       30ms  7.50%  runtime.mallocgc
+         0     0%   100%       30ms  7.50%  runtime.mallocgcSmallNoscan
+         0     0%   100%       10ms  2.50%  runtime.mcall
+         0     0%   100%       20ms  5.00%  runtime.netpoll
+         0     0%   100%       10ms  2.50%  runtime.notesleep
+         0     0%   100%       10ms  2.50%  runtime.notewakeup
+         0     0%   100%       10ms  2.50%  runtime.park_m
+         0     0%   100%       10ms  2.50%  runtime.profilealloc
+         0     0%   100%       10ms  2.50%  runtime.schedule
+         0     0%   100%       10ms  2.50%  runtime.semasleep
+         0     0%   100%       10ms  2.50%  runtime.semawakeup
+         0     0%   100%       20ms  5.00%  runtime.startTheWorldWithSema
+         0     0%   100%       10ms  2.50%  runtime.startm
+         0     0%   100%       10ms  2.50%  runtime.stopm
+         0     0%   100%       30ms  7.50%  runtime.sysUsed (inline)
+         0     0%   100%       30ms  7.50%  runtime.sysUsedOS (inline)
+         0     0%   100%       80ms 20.00%  runtime.systemstack
+         0     0%   100%       10ms  2.50%  runtime.tracebackPCs
+         0     0%   100%       10ms  2.50%  runtime.wakep
+         0     0%   100%      290ms 72.50%  slices.Sort[go.shape.[]float64,go.shape.float64] (inline)
+         0     0%   100%       10ms  2.50%  slices.choosePivotOrdered[go.shape.float64]
+         0     0%   100%       10ms  2.50%  slices.medianAdjacentOrdered[go.shape.float64] (inline)
+         0     0%   100%      290ms 72.50%  sort.Float64s
+         0     0%   100%      330ms 82.50%  testing.(*B).run1.func1
+         0     0%   100%      330ms 82.50%  testing.(*B).runN

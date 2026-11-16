@@ -164,6 +164,12 @@ The optimized implementation introduced `calculateMedianInPlace`. The original `
 
 The optimization removed approximately half of the allocation activity while preserving all statistical results. Runtime improved by approximately 2.74%, showing that sorting remained the main CPU cost even after the extra slice copy was removed.
 
+### After-Optimization Profiles
+
+The after-optimization allocation profile confirmed that the copy previously created by `calculateMedian` had been removed from the sequential bootstrap path. Before optimization, `calculateMedian` allocated 79.62 MB and `bootstrapSample` allocated 77.60 MB. After optimization, `calculateMedianInPlace` had no significant allocation, while `bootstrapSample` allocated 78.11 MB.
+
+The after-optimization CPU profile showed that sorting accounted for approximately 72.50% of cumulative CPU samples. Bootstrap sample generation accounted for approximately 10%. This confirmed that sorting remained the primary CPU bottleneck after the redundant slice copy was removed.
+
 ## Results
 
 ### Sequential Go Bootstrap Results
