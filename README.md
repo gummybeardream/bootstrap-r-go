@@ -3,15 +3,23 @@ R and Go bootstrap sampling comparison
 
 ## Project Overview
 
+This project compares R and Go implementations of the bootstrap estimation of the median's standard error. The study compares runtime and memory across 100 runs and evaluates projected cloud computing savings.
 
 ## Management Problem
 
+A research consultancy would like to examine the performance advantages of Go compared to R, which is the software platform that they have used for years. The firm is considering moving much of their programming to Go because of growing cloud-computing costs.
 
 ## Selected Statistical Method
 
 The selected statistical method is the bootstrap estimation of the median's standard error. The median is the middle value after sorting all observations. Standard error measures how much an estimate would vary across repeated samples. Bootstrap resampling approximates how an estimate can vary across repeated samples. Bootstrap resampling replicates this variation by repeatedly sampling from the observed data with replacement. This method is computationally intensive because it may repeat the calculation thousands of times.
 
 ## Bootstrap Methodology
+
+R generated a symmetric dataset containing 1,000 observations from a normal distribution using seed 2025. The dataset was saved as `data/symmetric.csv` so that R and Go would process identical input values.
+
+Each implementation performed 10,000 bootstrap repetitions. During each repetition, 1,000 observations were sampled from the original dataset with replacement. The median of each bootstrap sample was calculated and stored. The estimated standard error was the sample standard deviation of the 10,000 bootstrap medians.
+
+R used the `boot` package with seed 2026. Go used the 64-bit Mersenne Twister package with the same numerical seed. The two generators belong to the same algorithm family but do not produce identical resampling sequences. Therefore, the original medians were expected to match exactly, while the bootstrap standard-error estimates were expected to be close rather than identical.
 
 ## R Package Research
 
@@ -25,7 +33,7 @@ The `boot` package was chosen because it is an established R package that handle
 
 ## Go Package Research
 
-| Package | Type | Planned use |
+| Package | Type | Use |
 |---|---|---|
 | `encoding/csv` | Go standard library | Read the shared CSV dataset |
 | `strconv` | Go standard library | Convert CSV text into numerical values |
@@ -35,7 +43,7 @@ The `boot` package was chosen because it is an established R package that handle
 | `log` | Go standard library | Record application events and errors |
 | `mt19937` | Third-party | Generate reproducible Mersenne Twister random numbers |
 
-Standard-library packages are included with Go and will be used for the project. The `mt19937` package was selected because R uses a Mersenne Twister generator by default. The Go package implements the 64-bit Mersenne Twister and provides reproducible random-number generation. Using generators from the same algorithm family improves the experimental comparison, but R and Go are not expected to produce identical resamples from the same seed.
+Standard-library packages are included with Go and were used for the project. The `mt19937` package was selected because R uses a Mersenne Twister generator by default. The Go package implements the 64-bit Mersenne Twister and provides reproducible random-number generation. Using generators from the same algorithm family improves the experimental comparison, but R and Go are not expected to produce identical resamples from the same seed.
 
 - Go standard library: https://pkg.go.dev/std
 - Mersenne Twister package: https://github.com/seehuhn/mt19937
@@ -54,8 +62,6 @@ Standard-library packages are included with Go and will be used for the project.
 - `go/statistics.go`: Calculates sample standard deviation.
 - `go/statistics_test.go`: Tests known results and invalid input.
 - `go/main.go`: Runs the complete sequential Go bootstrap application.
-- `go/statistics.go`: Calculates sample standard deviation.
-- `go/statistics_test.go`: Tests the standard-deviation calculation.
 - `results/logs/`: Contains saved program and test output.
 - `results/logs/go_application.log`: Example Go application log and statistical output.
 - `results/benchmarks/r_end_to_end_100_2026-11-15.txt`: Raw timing and memory output from 100 R runs.
@@ -69,13 +75,13 @@ Standard-library packages are included with Go and will be used for the project.
 - Go operating system and architecture: darwin/arm64
 - Go module: `github.com/gummybeardream/bootstrap-r-go`
 
-R and Go will read the same saved observations from the shared dataset, `data/symmetric.csv`.
+R and Go read the same saved observations from the shared dataset, `data/symmetric.csv`.
 
 - Distribution: normal and symmetric
 - Observation count: 1,000
 - Data-generation seed: 2025
 - Shared file: `data/symmetric.csv`
-- Planned bootstrap repetitions: 10,000
+- Bootstrap repetitions: 10,000
 - R version: 4.3.2
 - `boot` package version: 1.3.28.1
 
@@ -107,12 +113,12 @@ The initial Go application successfully read the shared CSV dataset and produced
 
 | Component | Test coverage | Tests | Result |
 |---|---|---:|---|
-| Median calculation | Odd count, even count, single value, empty input, input preservation | 5 | Passed |
+| Median calculation | Odd count, even count, single value, empty input, input preservation, in-place calculation | 6 | Passed |
 | CSV reader | Valid input, reordered columns, missing column, invalid number, empty value, header only, missing file, empty file | 8 | Passed |
 | Bootstrap sampling | Sample size, source values, empty input, nil generator, reproducibility | 5 | Passed |
 | Sample standard deviation | Known result and insufficient input | 2 | Passed |
 | Sequential bootstrap | Constant data, invalid repetitions, empty input, nil generator, reproducibility | 5 | Passed |
-| Total | Current Go unit-test suite | 25 | Passed |
+| Total | Current Go unit-test suite | 26 | Passed |
 
 Tests were run with `go test -count=1 -v ./go`. The `-count=1` option disabled Go's test cache so that the saved output represented a fresh test execution.
 
@@ -168,7 +174,7 @@ Individual bootstrap repetitions are not logged because 10,000 log messages woul
 
 Logs are written to standard error, while statistical results are written to standard output. Both streams were captured in `results/logs/go_application.log` using:
 
-```text
+```bash
 go run ./go 2>&1 | tee results/logs/go_application.log
 ```
 ### Baseline Go Profiles
@@ -216,12 +222,108 @@ The original medians match exactly because both programs use the same saved obse
 
 ## Cloud Cost Analysis
 
+Google Cloud Compute Engine was selected as the infrastructure-as-a-service provider. The hypothetical deployment uses an `e2-standard-2` virtual machine in the Iowa `us-central1` region. This machine provides 2 virtual CPUs and 8 GiB of memory. Its default on-demand price was $0.06701142 per hour when accessed on November 15, 2026.
+
+Source: https://cloud.google.com/products/compute/pricing/general-purpose
+
+The cost estimate applies the locally measured mean runtimes to a continuous batch workload of one million executions.
+
+| Measurement | R | Go |
+|---|---:|---:|
+| Mean runtime per execution | 0.5571 s | 0.5038 s |
+| Runtime for 1,000,000 executions | 154.75 hours | 139.94 hours |
+| Estimated compute cost | $10.37 | $9.38 |
+| Estimated savings with Go | — | $0.99 |
+| Percentage savings | — | 9.57% |
+
+This estimate assumes that the relative performance measured on the Apple M1 transfers to the selected cloud VM. It is a projection rather than a cloud-hosted benchmark. The estimate excludes persistent storage, network transfer, taxes, discounts, engineering labor, and maintenance costs. It also assumes the executions are processed continuously on an already-running VM. Launching a separate VM for every subsecond execution would invoke Google Cloud's minimum billing period and would not produce the same cost estimate.
+
+Go also used 93.22% less resident memory locally. This may allow denser workloads or smaller VM configurations, but that potential benefit was not converted directly into cost savings because both implementations fit within the selected VM's memory.
+
 ## Recommendation
+
+The consultancy should not replace R with Go for all statistical work. R remains preferable for exploratory analysis, rapid model development, visualization, and methods already supported by its extensive package ecosystem.
+
+Go should be considered for stable, frequently executed production workloads where the statistical method is already understood and runtime or memory use creates meaningful infrastructure costs. For this bootstrap experiment, Go produced a 9.57% mean runtime reduction and used 93.22% less resident memory than R. The projected compute-cost reduction was therefore approximately 9.57% for a continuous batch workload on the same VM configuration.
+
+The financial benefit is small for infrequent executions. At one million executions, the projected savings were approximately $0.99 on the selected VM. A migration would make sense only when the workload is much larger, memory pressure is important, or the Go implementation can be reused across production systems.
+
+This study evaluated one statistical method, one symmetric dataset, one computer, and a sequential Go implementation. It did not directly benchmark cloud hardware or multi-core scaling. The consultancy should conduct a cloud-hosted pilot using representative production data before making a broader migration decision.
 
 ## Installation and Usage
 
+### Prerequisites
+
+- Go 1.27.1 or compatible
+- R 4.3.2 or compatible
+- R package `boot`
+
+Clone and enter the repository:
+
+```bash
+git clone https://github.com/gummybeardream/bootstrap-r-go.git
+cd bootstrap-r-go
+```
+
+Run the R implementation:
+
+```bash
+Rscript r/bootstrap_median.R
+```
+
+Run the Go implementation:
+
+```bash
+go run ./go
+```
+
+Run the Go tests:
+
+```bash
+go test -count=1 -v ./go
+```
+
+Run the Go benchmarks:
+
+```bash
+go test -run '^$' -bench . -benchmem -count 5 ./go
+```
+
+Install the R package if needed:
+
+```bash
+Rscript -e 'install.packages("boot", repos="https://cloud.r-project.org")'
+```
+
 ## Building the Go Executable
+
+From the repository root, compile the application with:
+
+```bash
+go build -o bootstrap-median ./go
+```
+
+Run the compiled executable using:
+
+```bash
+./bootstrap-median
+```
 
 ## GenAI Tools
 
+I used OpenAI Codex as a programming tutor and review assistant during this project. It helped to:
+
+- break the assignment into milestones
+- explain R and Go packages for bootstrap estimation
+- review and debug code
+
+I reviewed, entered, tested, and revised the project code and documentation. AI-generated suggestions were validated with Go formatting, unit tests, vetting, benchmarks, and manual application runs.
+
 ## References
+
+- Gelman, A., & Vehtari, A. (2021). *What are the most important statistical ideas of the past 50 years?* https://arxiv.org/abs/2012.00174
+- R Core Team. *R: A Language and Environment for Statistical Computing.* https://www.r-project.org/
+- Canty, A., & Ripley, B. *boot: Bootstrap Functions.* https://cran.r-project.org/package=boot
+- Voss, J. *The Mersenne Twister in Go.* https://github.com/seehuhn/mt19937
+- Google Cloud. *General Purpose VM Pricing.* https://cloud.google.com/products/compute/pricing/general-purpose
+- Go Project. *Go Standard Library.* https://pkg.go.dev/std
