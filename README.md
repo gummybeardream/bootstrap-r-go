@@ -3,7 +3,9 @@ R and Go bootstrap sampling comparison
 
 ## Project Overview
 
+
 ## Management Problem
+
 
 ## Selected Statistical Method
 
@@ -56,6 +58,8 @@ Standard-library packages are included with Go and will be used for the project.
 - `go/statistics_test.go`: Tests the standard-deviation calculation.
 - `results/logs/`: Contains saved program and test output.
 - `results/logs/go_application.log`: Example Go application log and statistical output.
+- `results/benchmarks/r_end_to_end_100_2026-11-15.txt`: Raw timing and memory output from 100 R runs.
+- `results/benchmarks/go_end_to_end_100_2026-11-15.txt`: Raw timing and memory output from 100 compiled Go runs.
 
 ## Data and Experimental Design
 
@@ -131,7 +135,30 @@ Run benchmarks with this command:
 ```bash
 go test -run '^$' -bench . -benchmem -count 5 ./go
 ```
+### Benchmarking Methodology
 
+All end-to-end measurements were performed on the same Apple M1 computer with 16 GiB of memory, running macOS 26.6.2. The software environment used Go 1.27.1 for `darwin/arm64` and R 4.3.2. Both implementations processed the same 1,000 saved observations and performed 10,000 bootstrap repetitions.
+
+Both programs were executed in batch mode from the command line. R was run using `Rscript`, while Go was run as a compiled executable. The macOS `/usr/bin/time -l` utility measured elapsed time and maximum resident set size using the same method for both implementations.
+
+### End-to-End R and Go Comparison
+
+Both implementations were executed 100 times in batch mode using the same computer, input dataset, and bootstrap repetition count. R was executed with `Rscript`, while Go was run as a compiled executable. The macOS `/usr/bin/time -l` utility measured elapsed time and maximum resident set size.
+
+| Measurement | R | Go |
+|---|---:|---:|
+| Runs | 100 | 100 |
+| Mean elapsed time | 0.5571 s | 0.5038 s |
+| Median elapsed time | 0.5500 s | 0.5000 s |
+| Runtime standard deviation | 0.0137 s | 0.0167 s |
+| Minimum elapsed time | 0.5400 s | 0.4900 s |
+| Maximum elapsed time | 0.6100 s | 0.5700 s |
+| Mean maximum resident set size | 153.94 MiB | 10.44 MiB |
+| Median maximum resident set size | 154.59 MiB | 10.42 MiB |
+
+Based on mean elapsed time, compiled Go was approximately 1.106 times as fast as R, representing a 9.57% runtime reduction. Go used approximately 93.22% less resident memory, while R used approximately 14.74 times as much resident memory.
+
+The first isolated R run took 0.83 seconds, which was substantially slower than the repeated-run mean. This likely reflected cold-start package or filesystem effects. The 100-run results were used for the primary comparison to avoid basing conclusions on one potentially unusual execution.
 
 ## Profiling and Logging
 
